@@ -3,9 +3,9 @@ import numpy as np
 
 
 class Node:
-    def __init__(self, weight: int, is_barrier_free: bool) -> None:
+    def __init__(self, weight: int, boolean_tag: bool) -> None:
         self.weight: int = weight
-        self.is_barrier_free: bool = is_barrier_free
+        self.boolean_tag: bool = boolean_tag
 
     def __repr__(self) -> str:
         return f"{self.weight}"
