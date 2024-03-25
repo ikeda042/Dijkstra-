@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from typing import cast
 
 
 class AdjNode:
@@ -26,6 +27,25 @@ def add(G: list[list[AdjNode]], G_T: list[list[AdjNode]]) -> list[list[AdjNode]]
         ]
         for i in range(len(G))
     ]
+
+
+def generate_random_graph(R: int) -> np.ndarray:
+    random.seed(10)
+    weights_cs = [0] * 50 + [1] * 4 + [2] * 2 + [3] * 2 + [3] * 6 + [4] * 3 + [5] * 6
+    p = [-1] * 5 + [1] * 21
+
+    def get_weight():
+        return random.choice(weights_cs) * random.choice(p)
+
+    G: list[AdjNode] = [[AdjNode(0, False) for i in range(R)] for j in range(R)]
+    for i in range(R):
+        for j in range(R):
+            if i == j or i < j:
+                continue
+            w = get_weight()
+            cast(AdjNode, G[i][j]).weight = abs(w)
+            cast(AdjNode, G[i][j]).boolean_tag = True if w > 0 else False
+    return G
 
 
 class Node:
