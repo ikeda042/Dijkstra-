@@ -55,37 +55,38 @@ class PathFinder:
         print("+++++++++++++++++++++++++++++++++++")
         print(self.nodes)
 
-    def search_path(self, startNode: str, endNode: str):
+    def search_path(self, start_node: str, end_node: str):
 
         # 最短距離を無限大に初期化
         for i in self.nodes.keys():
             self.nodes[i].d = float("inf")
 
-        queue: list[str] = [startNode]
+        queue: list[str] = [start_node]
         # currNodeを初期化
-        currNode: str = queue[0]
+        curr_node: str = queue[0]
         # currNodeの距離を初期化
-        self.nodes[currNode].set_d(0)
+        self.nodes[curr_node].set_d(0)
         # 初期ノードのprevNodeを初期化
-        self.nodes[currNode].prev_node = None
+        self.nodes[curr_node].prev_node = None
 
         while len(queue) > 0:
-            currNode = queue.pop(0)
-            adjs = self.nodes[currNode].adj
+            curr_node = queue.pop(0)
+            adjs = self.nodes[curr_node].adj
             for i in adjs.keys():
-                tmp_d: float = self.nodes[currNode].d + self.nodes[currNode].adj[i]
+                tmp_d: float = self.nodes[curr_node].d + self.nodes[curr_node].adj[i]
                 if self.nodes[i].d > tmp_d:
                     # スタートノードからの最短到達距離を更新
                     self.nodes[i].set_d(int(tmp_d))
-                    self.nodes[i].prev_node = self.nodes[currNode]
+                    self.nodes[i].prev_node = self.nodes[curr_node]
                     self.nodes[i].set_explored(True)
                     queue.append(i)
-        cNode: Node = self.nodes[endNode]
+
+        c_node: Node = self.nodes[end_node]
 
         # Backtrack
-        s: list[str] = [endNode]
-        while cNode.prev_node != None:
-            cNode = cNode.prev_node
+        s: list[str] = [end_node]
+        while c_node.prev_node != None:
+            cNode = c_node.prev_node
             s.append(cNode.name)
 
-        return [s[::-1], self.nodes[endNode].d]
+        return [s[::-1], self.nodes[end_node].d]
