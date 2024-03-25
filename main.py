@@ -18,7 +18,10 @@ def T(G: list[list[AdjNode]]) -> list[list[AdjNode]]:
 def add(G: list[list[AdjNode]], G_T: list[list[AdjNode]]) -> list[list[AdjNode]]:
     return [
         [
-            AdjNode(G[i][j].weight + G_T[i][j].weight, G[i][j].boolean_tag)
+            AdjNode(
+                G[i][j].weight + G_T[i][j].weight,
+                G[i][j].boolean_tag or G_T[i][j].boolean_tag,
+            )
             for j in range(len(G[0]))
         ]
         for i in range(len(G))
